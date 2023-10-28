@@ -1,0 +1,196 @@
+---
+title: 'Stats 250: Lab 6 Assignment'
+author: "Replace this text with your name"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Instructions
+
+Complete the lab exercises and Dive Deeper questions below. Lab exercises will be graded out of 2 points each and the Dive Deeper questions will be graded out of 3 points each - all of them will be graded for *correctness*. Upon completion, follow the submission instructions at the bottom of this document. We strongly encourage you to work on this assignment with a partner, but each student must submit their own lab assignment.
+
+***
+
+### Background
+
+During Lecture Group Work 15 (and posted on Canvas), we asked students to complete a typing test. With this test, students completed a one-minute typing test and were presented with the following results:
+
+- `typingSpeed`: the number of words typed in one minute, including words that had typos (measured in wpm, or words per minute)
+- `accuracy`: percentage of words typed correctly
+- `netSpeed`: the number of words *correctly* typed in one minute (measured in wpm, or words per minute)
+
+If you're interested in taking the test yourself, head to the website below and select "1 Minute Test" and "Medium Text". 
+
+[Typing Test Link](https://www.typingtest.com/)
+
+The results for a sample of 164 Stats 250 students are provided in the data set below. 
+
+```{r read_data}
+typing <- read.csv("typingSpeedsF23.csv")
+```
+
+You can preview the data here.
+
+```{r preview_data}
+head(typing)
+```
+
+And be sure to load in the required packages!
+
+```{r load_packages}
+library(ggplot2)
+```
+
+
+***
+
+
+### Lab Exercises
+
+After reading the background above, complete the following lab exercises. Remember, these exercises are worth 2 points each and are graded for *correctness*.
+
+#### Analysis 1
+
+We would like to estimate the average typing speed of *all* Stats 250 students using the sample of data collected above. Note: this first analysis will involve the `typingSpeed` variable - and our second will involve the net typing speed. Read the background above for the difference between the two variables!
+
+> **1.** Using `ggplot()`, create a QQ plot and histogram for the variable `typingSpeed`. You will comment on these plots in Exercise 2. Be sure that both plots have a title and appropriate axis labels. 
+
+```{r exercise1_qqplot, error = T}
+# Replace this comment with your code
+
+```
+
+```{r exercise1_histogram, error = T}
+# Replace this comment with your code
+
+```
+
+
+
+> **2.** Based on your QQ plot and histogram from Exercise 1, answer the following questions. (1) Observations about the sample: what can we conclude about the sample distribution? (2) Conclusion about the population distribution: based on the sample distribution, what is reasonable to conclude about the population distribution? (3) Conclusion about the sampling distribution: based on the population distribution and sample size, what is reasonable to conclude about the sampling distribution?
+
+*Observations about the sample:* Replace this text with your answer. 
+
+*Conclusion about the population distribution:* Replace this text with your answer.
+
+*Conclusion about the sampling distribution:* Replace this text with your answer.
+
+
+
+> **3.** Use the `t.test()` function to create a 90% confidence interval for the average typing speed of all Stats 250 students (using the `typingSpeed` variable). Provide an interpretation of your confidence interval within context.
+
+```{r exercise3, error = T}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with an interpretation of your computed interval. 
+
+
+
+
+> **4.**  First, use R to find the t* multiplier used to create the 90% confidence interval in Exercise 3. Then, answer the following question: if a 95% confidence interval was created using the same data, would the resulting interval be narrower, wider, or stay the same width? 
+
+```{r exercise4, error = T}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer.
+
+
+
+#### Analysis 2
+
+The website states that someone with a "fluent" typing proficiency is someone who has a *net* typing speed of 55 words per minute. We would like to assess if the average *net* typing speed of all Stats 250 students is above this value.
+
+
+> **5.**  Use notation to state the null and alternative hypothesis. Then, define your parameter of interest within context. Replace the blank lines below with your answers. 
+
+*Answer:* H0: _____ vs Ha: _____
+
+*Answer:* Where ___ represents _________________
+
+
+
+> **6.** Using `ggplot()`, create a histogram for the variable `netSpeed`. Be sure to include a title and appropriate axis labels. Based on this plot, does the sample provide evidence to support the idea that the average net typing speed of all Stats 250 students is above this value? Briefly explain you answer. Note: we are simply asking you to speculate the answer to this question. You will run a hypothesis test in the next exercise to answer this question based on a p-value. 
+
+```{r exercise6, error = T}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer. 
+
+
+
+> **7.** Use the `t.test()` function and to run the hypothesis test for Analysis 2. Based on the output, evaluate the p-value and provide a conclusion in the context of the problem. Note: you will interpret the p-value in Dive Deeper 1. 
+
+```{r exercise7, error = T}
+# Replace this comment with your code
+
+```
+
+*Evaluation:* Replace this text with how much evidence you have against the null and in favor of the alternative.
+
+*Conclusion:* Replace this text with your conclusion (using the context of the analysis). 
+
+
+
+***
+
+### Dive Deeper Questions
+
+After completing the lab exercises above, complete the following Dive Deeper questions. Remember, these questions are worth 3 points each and are graded for correctness.
+
+> **1.** The following interpretation of the p-value (from Exercise 7) is *incomplete*. Finish the statement *within the context* of the hypothesis test. "The probability of observing a t-test statistic of 4.5518 or greater is 0.000005177..."
+
+*Answer:* ...replace this text with your answer.
+
+
+
+> **2.** If we analyze the final variable in the data set, `accuracy`, we find the QQ plot below. We observe that the sample does *not* follow a normal model - because the points pull away from the identity line in a clear pattern. First, why does the QQ plot have a rather long horizontal line of points at 100 with no observations above this value? Hint: think about the variable we are plotting. Second, with a sample size of 164, what will be approximately normal because of the CLT? 
+
+```{r qq_plot_accuracy}
+ggplot(data = typing, aes(sample = accuracy)) + 
+  
+  stat_qq() +
+  stat_qq_line() + 
+  
+  labs(title = "QQ Plot of Typing Accuracies",
+       subtitle = "for a sample of 164 students",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles")
+```
+
+**Answer 1:** Replace this text with your answer.
+
+**Answer 2:** Replace this text with your answer.
+
+
+
+***
+
+### Submission Instructions
+
+Once you have finished, follow the instructions below to submit your work.
+
+1. At the top of the document, update the `author` field. *Do not change anything else at the top of the document.*
+
+2. Click the Knit button to create an HTML file of your work.
+
+3. In the Files pane (bottom right window), check the box next to `lab06_assignment.html`. 
+
+4. In the Files pane, click on the gear icon (More) and select "Export..."
+
+5. Do not change the file name (`lab06_assignment.html`). Click Download and save the file to your computer. 
+
+6. On the Stats 250 Canvas site, navigate to the Lab 6 assignment. 
+
+7. Upload your saved `lab06_assignment.html` file. 
+
+8. Click "Submit Assignment". Congratulations, you are done with Lab 6!
