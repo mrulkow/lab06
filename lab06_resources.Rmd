@@ -1,0 +1,193 @@
+---
+title: 'Stats 250: Lab 6 Resources'
+author: "Instructional Team"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    theme: lumen
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Learning Objectives
+1. Create side-by-side boxplots
+2. Compute numerical summaries by group
+3. Create QQ plots by group
+4. Run a hypothesis test for a difference in population means
+
+
+***
+
+
+## Statistical Review
+
+### A Difference in Two Means
+
+If the response variable is quantitative, our summary measure is typically the mean. If we wish to compare the means of two groups, we can run a test for a difference in two population means (mu_1 - mu_2). This will be the focus of today's lab!
+
+
+***
+
+
+## Coding Examples
+
+### Data and Packages
+
+For today's lab, we will be using a subset of the penguins data set. The `female_penguins` data set includes the *female* penguins that were observed over the course of the study. Additionally, to compare Adelie and Chinstrap penguins, we have removed all Gentoo penguins from the data set as well. 
+
+```{r read_penguins}
+female_penguins <- read.csv("female_penguins.csv")
+```
+
+Run the following code chunk to load in any necessary packages.
+
+```{r load_packages}
+library(ggplot2)
+```
+
+
+### Independent Samples
+
+In the following analysis, we are going to compare the body mass of female Adelie penguins and female Chinstrap penguins. Specifically, we wish to assess if there is a *difference* in the *average* body mass of all female Adelie penguins and all female Chinstrap penguins.
+
+Let's take a look at the data. 
+
+```{r view_penguins}
+head(female_penguins)
+```
+
+Each row of data represents a different penguin (this is known as our observational unit). 
+
+Regarding the variable species, each penguin could be *either* an Adelie penguin *or* a Chinstrap penguin. We could separate the data into two *independent samples* based on species. Using these two independent samples (Adelie penguins and Chinstrap penguins), we could then compare the means for a quantitative response of interest (such as body mass).
+
+The above example is an analysis involving *independent samples* - and we could run a hypothesis test to assess if there is a difference between the two population means (mu_1 - mu_2). 
+
+
+### Hypotheses
+
+Our analysis will assess if there is a difference in the average (or mean) body mass of all female Adelie penguins and the average (or mean) body mass of all female Chinstrap penguins. The hypotheses for this test would look like this:
+
+- Null Hypothesis (H0): mu_Adelie - mu_Chinstrap = 0
+- Alternative Hypothesis (Ha): mu_Adelie - mu_Chinstrap =/ 0
+
+The parameter of interest, mu_Adelie - mu_Chinstrap, represents the difference in the mean body mass of all female Adelie penguins and the mean body mass of all female Chinstrap penguins. 
+
+We could also choose to write the hypotheses like this:
+
+- Null Hypothesis (H0): mu_Adelie = mu_Chinstrap
+- Alternative Hypothesis (Ha): mu_Adelie != mu_Chinstrap
+
+Where mu_Adelie represents the average body mass of all female Adelie penguins and mu_Chinstrap represents the average body mass of all female Chinstrap penguins.
+
+Note: the notation of =/ or != both work for the alternative of "not equal to"
+
+Note: you are welcome to define the parameter as a difference in two population means (the first example) or you can define each population mean separately (the second example)
+
+
+### Side-by-Side Boxplots
+
+As seen in earlier labs, when comparing a quantitative response across multiple groups, side-by-side boxplots are a helpful visualization tool. If we wanted to descriptively compare the body mass of female Adelie penguins and female Chinstrap penguins, our code would look like this:
+
+```{r side_by_side_boxplots_example}
+ggplot(data = female_penguins, aes(x = species, y = body_mass_g)) + 
+  
+  geom_boxplot() + 
+  
+  labs(title = "Side-by-Side Boxplots of Body Mass by Species",
+       subtitle = "by Stats 250 Instructional Team",
+       x = "Species",
+       y = "Body Mass (in grams)")
+```
+
+From the plot, it appears that female Chinstrap penguins are generally heavier, on average. The median value of body mass is higher for Chinstrap, as well as the Q1 and Q3 values.
+
+As a reminder, we can use the `aggregate()` function to compute numerical summaries by group. The following code would calculate the mean body mass for each of the two species.
+
+```{r aggregate_example}
+aggregate(body_mass_g ~ species, 
+          data = female_penguins,
+          FUN = mean)
+```
+
+Remember, the order of the variables for this function matters! The quantitative variable must go first (`body_mass_g`), followed by the categorical/grouping variable (`species`).
+
+
+### Faceted QQ Plots
+
+To run a hypothesis test that assesses if there is a difference in the average body mass of all female Adelie penguins and all female Chinstrap penguins, we must first check the required assumptions.
+
+*Assumption for a Difference in Two Means:* Is it reasonable to assume that *each* sample was drawn from a normally distributed population?
+
+To check this, we need to create a QQ plot for *each* sample of data. We can do this by creating a "faceted" plot - a plot that splits up the data by group. Our code would look like this:
+
+```{r faceted_QQ_plots_example}
+ggplot(data = female_penguins, aes(sample = body_mass_g)) + 
+  
+  stat_qq() + 
+  stat_qq_line() +
+  
+  labs(title = "QQ Plots of Body Mass by Species",
+       subtitle = "by Stats 250 Instructional Team",
+       x = "Theoretical Quantiles",
+       y = "Sample Quantiles") + 
+  
+  facet_wrap(vars(species))
+```
+
+A few things to point out about the above code:
+
+1. The `aes()` component of the code uses `sample` instead of `x`
+2. We use `stat_qq()` and `stat_qq_line()` to create the plot
+3. "Theoretical Quantiles" and "Sample Quantiles" can be used for the x and y-axis labels of any QQ plot you create (but please include some information about the variables in the title)
+4. `facet_wrap()` allows us to split up the data by groups - just add the name of the grouping variable inside of `vars()`
+
+*Conclusion from the plots:* From the above QQ plots, it is reasonable to assume that *each* sample of body masses was drawn from a normally distributed population - because the points roughly follow the identity line with no clear patterns or severe deviations in *each* of the plots. 
+
+
+### Testing a Difference in Two Means
+
+Now that the assumptions have been reasonably met (in the previous section), we can now carry out the hypothesis test to assess if there is a difference in the average body mass of all female Adelie penguins and the average body mass of all female Chinstrap penguins. Our code would look like this:
+
+```{r hypothesis_test_for_a_difference_in_two_means_example}
+t.test(body_mass_g ~ species,
+       data = female_penguins,
+       alternative = "two.sided")
+```
+
+The `t.test()` function is similar to the `aggregate()` function from earlier! We input the variables of interest (quantitative ~ categorical) and then specify the data set. 
+
+We also need to specify whether the alternative hypothesis is "less", "greater", or "two.sided". Because we are testing for a "difference" (and have not specified which species we suspect to have a higher mean body mass), we run a two-sided test (i.e., the alternative hypothesis is "not equal to"). 
+
+**Evaluation:** With a p-value of 0.008471, there is *very strong* evidence against the null hypothesis and in favor of the alternative hypothesis.
+
+**Conclusion:** Based on the sample data, there is very strong evidence to suggest a difference between the average body mass of all female Adelie penguins and the average body mass of all female Chinstrap penguins. 
+
+
+### Histogram Review
+
+Outside of the examples above, the only additional code you'll need to complete the supplement is the code for a histogram. Below is some example code as a reminder. 
+
+Suppose we wanted to create a histogram that visualized the distribution of bill depth for all 107 penguins in the data set. The code would look like this:
+
+```{r histogram_example}
+ggplot(data = female_penguins, aes(x = bill_depth_mm)) +
+  
+  geom_histogram(bins = 10, color = "black", fill = "grey") + 
+  
+  labs(title = "Histogram of Bill Depths",
+       subtitle = "by Stats 250 Instructional Team",
+       x = "Bill Depth (in mm)",
+       y = "Frequency")
+```
+
+The distribution of bill depths is unimodal and approximately symmetric with an average around 18 mm and a range from roughly 15 mm to 21 mm.
+
+
+That's all the code and information you need for the supplement! Click on the `mwrite2_supplement.Rmd` file in the bottom right window to start working on the assignment for today. 
+
+

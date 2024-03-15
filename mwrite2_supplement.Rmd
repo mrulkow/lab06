@@ -1,0 +1,232 @@
+---
+title: 'Stats 250: MWrite 2 Supplement'
+author: "Instructional Team"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Instructions
+
+Instead of a lab assignment this week, you will be completing your analysis for the second MWrite assignment. Each of the 10 questions will be graded out of 5 points (for a total of 50 points). These questions will be graded for *correctness*. We strongly encourage you to work on this assignment with a partner, but each student must submit their own lab assignment. Additionally, please note that there is no submission for Lab 6. The only document that you will submit today is the *mwrite2_supplement.html* file - and this will be submitted to the corresponding assignment on Canvas. 
+
+**Reminder:** Please be sure all plot titles and labels have been appropriately updated. Point deductions will be applied for each plot with missing or inappropriate labels. On this note, your plots should **not** use the subtitle: "by Stats 250 Instructional Team". 
+
+
+***
+
+
+### Background
+
+Hemoglobin is a protein in red blood cells that carries oxygen to various parts of the body, with higher hemoglobin levels typically denoting better cardiovascular health. However, hemoglobin can sometimes become glycosylated, where the hemoglobin protein reacts with a carbohydrate such as glucose and begins to malfunction. This problem can be particularly troublesome for individuals with diabetes, who struggle to produce enough insulin to control their blood glucose levels.
+
+Doctors sometimes perform a glycosylated hemoglobin test to show what a person's average blood glucose level was over the past 2 to 3 months. This information can help determine how well or poorly a person's diabetes is being controlled over time. *Lower levels of glycosylated hemoglobin are desirable and indicate diabetes symptoms are being managed better.*
+
+The present data come from a controlled experiment exploring the effectiveness of a new treatment designed to help diabetic children manage their glycosylated hemoglobin levels. The experiment recruited a random sample of 16 insulin-dependent diabetic children (i.e., children that required insulin injections because their body would not produce enough on its own). During the study, 8 of the children were randomly assigned to the new, experimental treatment while the other 8 received the standard treatment. Each child's glycosylated hemoglobin levels were recorded (in g/dL, or grams per deciliter) before and after the treatment with the intention of evaluating whether the new treatment was superior to the original at reducing glycosylated hemoglobin levels, on average.
+
+The research assistant who originally analyzed the data from the study arrived at the conclusion that the new treatment did not produce better results, on average, than the standard treatment. One of the lead investigators, however, suspects that their analysis included substantial mistakes. The lead investigator has tasked you with recreating the assistant's original analyses, identifying and correcting any errors you find, and reporting back on whether your revised analysis suggests the new treatment provides better outcomes, on average, than the standard treatment for managing glycosylated hemoglobin levels among insulin-dependent children.
+
+
+The variables included in the data set are: 
+
+1. `age`: age of the participant (in years)
+2. `sex`: sex of the participant (F or M)
+3. `treatment`: the treatment assigned to the participant (New or Standard)
+4. `pre`: hemoglobin level of the participant *before* treatment (measured in grams per deciliter - or g/dL)
+5. `post`: hemoglobin level of the participant *after* treatment (measured in grams per deciliter - or g/dL)
+
+
+**Goal:** use these data to *assess if treatment (New vs Standard) causally affects the average hemoglobin level?*
+
+Use the following code chunk to read in the data set. 
+
+```{r read_data}
+load("hemoglobin.rda")
+```
+
+As always, be sure to load in any required packages.
+
+```{r load_package}
+library(ggplot2)
+```
+
+
+***
+
+
+### Exercises
+
+After reading in the data set above, complete the following lab exercise. Remember, these exercises are worth 5 points each and are graded for correctness.
+
+> **1.** Run the code chunk below to preview the data set. Using this output and the variable descriptions from the background above, identify the variable type (categorical or quantitative) for each of the variables. Then, describe the observational unit (i.e., what each row of data represents). Finally, identify which variable is acting as the explanatory variable. 
+
+```{r exercise1}
+head(hemoglobin)
+```
+
+*Variable Types:* After each variable name, type categorical or quantitative
+
+1. `age`: 
+2. `sex`: 
+3. `treatment`: 
+4. `pre`: 
+5. `post`: 
+
+*Observational Unit:* Replace this text with the observational unit of the data set
+
+*Explanatory Variable:* Replace this text with the name of the explanatory variable
+
+
+
+> **2.** The original study ran a hypothesis test that assessed if there was a *difference* in the average post-hemoglobin levels of the new and standard treatments. First, using notation, provide the null and alternative hypothesis of the original study's test. Then, define the parameter of interest. Hint: you can find a helpful example in the lab resources document.  
+
+*Null Hypothesis (H0):* Replace this text with the notation of your null hypothesis
+
+*Alternative Hypothesis (Ha):* Replace this text with the notation of your alternative hypothesis
+
+*Parameter Definition:* Replace this text with the definition of your parameter. This definition should be provided within the context of the study. 
+
+
+
+> **3.** We would like to replicate the results of the original study. First, create a set of side-by-side boxplots that compare the *post*-hemoglobin levels by treatment. Be sure to appropriately update the plot title and axis labels. Then, use the `aggregate()` function to compute the *mean* *post*-hemoglobin level by treatment. Using your results, write a 1 - 2 sentence description of the observed association. 
+
+```{r exercise3_boxplots}
+# Replace this comment with your code
+
+```
+
+```{r exercise3_means}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer. 
+
+
+
+> **4.** Create a set of faceted QQ plots to check the assumptions required to perform the hypothesis test of the original study. In 1 - 2 sentences, comment on whether or not the assumptions are reasonably met based on the plots. 
+
+```{r exercise4}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with a comment on whether or not the assumptions are reasonably met and why. 
+
+
+
+> **5.** Use the `t.test()` function to run the hypothesis test from the original study. Using your results, provide an evaluation of the p-value *and* write a conclusion within the context of the study. 
+
+```{r exercise5}
+# Replace this comment with your code
+
+```
+
+*Evaluation:* There is (not enough / some / strong / very strong) evidence against the null hypothesis and in favor of the alternative hypothesis. 
+
+*Conclusion:* Replace this text with a conclusion within the context of the study.
+
+
+
+> **6.** You believe that the *pre*-hemoglobin levels of the participants could have an impact on the study results. First, create a set of side-by-side boxplots that compare the *pre*-hemoglobin levels by treatment. Be sure to appropriately update the plot title and axis labels. Then, use the `aggregate()` function to compute the *mean* *pre*-hemoglobin level by treatment. Using your results, write a 1 - 2 sentence description of the observed association.
+
+```{r exercise6_boxplots}
+# Replace this comment with your code
+
+```
+
+```{r exercise6_means}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer.
+
+
+
+> **7.** First, run the code chunk below to create a new variable called "effect". This variable is calculcated by subtracting the pre-hemoglobin levels from the post-hemoglobin levels (i.e., post - pre) - and represents the effect of the corresponding treatment. You can preview the udpated data set using the second code chunk. In the third code chunk, create a histogram that visualizes the distribution of *effects* for all 16 participants. When creating the histogram, set the number of bins to 5 bins. Be sure to appropriately update the plot title and axis labels. Based on the plot, comment on whether or not the treatments seem to be effective. Your response should be 2 - 3 sentences in length. Hint: you may want to read the background to determine if a lower or higher glycosolated hemoglobin level is desired. 
+
+```{r create_effect_variable}
+hemoglobin$effect <- hemoglobin$post - hemoglobin$pre
+```
+
+```{r preview_data_with_effect_variable}
+head(hemoglobin)
+```
+
+```{r exercise7}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer. 
+
+
+
+> **8.** Analyze the efficacy of the two treatments using the newly created "effect" variable. First, create a set of side-by-side boxplots that compare the *effects* by treatment. Be sure to appropriately update the plot title and axis labels. Then, use the `aggregate()` function to compute the *mean* *effect* by treatment. Using your results, write a 1 - 2 sentence description of the observed association.
+
+```{r exercise8_boxplots}
+# Replace this comment with your code
+
+```
+
+```{r exercise8_means}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with your answer.
+
+
+
+> **9.** We wish to run a hypothesis test that assesses if there is a *difference* in the average effect of the two treatments. Create a set of faceted QQ plots to check the assumptions required to perform the intended hypothesis test. In 1 - 2 sentences, comment on whether or not the assumptions are reasonably met based on the plots. 
+
+```{r exercise9}
+# Replace this comment with your code
+
+```
+
+*Answer:* Replace this text with a comment on whether or not the assumptions are reasonably met and why. 
+
+
+
+> **10.** Use the `t.test()` function to assess if there is a *difference* in the average effect of the two treatments. Using your results, provide an evaluation of the p-value *and* write a conclusion within the context of the study.
+
+```{r exercise10}
+# Replace this comment with your code
+
+```
+
+*Evaluation:* There is (not enough / some / strong / very strong) evidence against the null hypothesis and in favor of the alternative hypothesis. 
+
+*Conclusion:* Replace this text with a conclusion within the context of the study.
+
+
+
+***
+
+
+### Submission Instructions
+
+Once you have finished, follow the instructions below to submit your work.
+
+1. At the top of the document, change the `author` field to your name (in quotes!). **Do not change any of the other fields (title, date, output) at the top of the document.**
+
+2. Click the Knit button to create an HTML file of your work. If you get an error that says "Duplicate chunk label", go back and check your code chunk names - each one must have a unique name!
+
+3. In the Files pane (bottom right window), check the box next to `mwrite2_supplement.html`.
+
+4. In the Files pane, click on the gear icon (More) and select "Export..."  
+
+5. Do not change the file name (`mwrite2_supplement.html`). Click Download and save the file to your computer. 
+
+6. On the Stats 250 Canvas site, navigate to the MWrite #2 Supplemental Work assignment. 
+
+7. Upload your saved `mwrite2_supplement.html` file. 
+
+8. Click "Submit Assignment". Congratulations, you are done with the analysis portion of MWrite #2! Note: there will be no file submission for the Lab 6 assignment on Canvas.
+
+
